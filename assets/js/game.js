@@ -27,7 +27,6 @@ var fight = function(enemyName) {
             }
         }
 
-
         //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
         enemyHealth =  enemyHealth - playerAttack;
 
@@ -64,7 +63,13 @@ var fight = function(enemyName) {
 };
 
 for (var i = 0; i < enemyNames.length; i++) {
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
+    if (playerHealth > 0) {
+        window.alert("Welcome to Robot Gladiators! Round " + (i +1));
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+    } else {
+        window.alert("You have lost your robit in battle! Game Over!");
+        break;
+    }
 }
