@@ -4,22 +4,36 @@ var randomNumber = function(min, max) {
     return value;
 }
 
+var fightOrSkip = function() {
+    //as player if they'd like to fight or skip using fightOrSkip function
+    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+
+    //Enter the conditional recursive function call here!
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+    //if player picks "skip" confirm and then stop the loop
+    if (promptFight.toLowerCase() === "skip") {
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+        
+        //if yes (true), leave fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            // subtract money from playerMoney for skipping
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
+        return false;
+    }
+}
+
 // this creates a function named "fight"
 var fight = function(enemy) {
     while(playerInfo.health > 0 && enemy.health > 0) {
-        // ask player if they want to fight or not
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-        if (promptFight.toLowerCase() === 'skip') {
-            // comfirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-            //if truthy, leave fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip this fight. Goodbye!");
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
+        if (fightOrSkip()) {
+            break;
         }
 
         //generate random damage value based on player's attack power
