@@ -32,7 +32,6 @@ var fightOrSkip = function() {
 // this creates a function named "fight"
 var fight = function(enemy) {
     //keep track of who goes first
-    debugger;
     var isPlayerTurn = true;
     if (Math.random() > 0.5) {
         isPlayerTurn = false;
@@ -162,10 +161,23 @@ var startGame = function() {
 
 var endGame = function() {
     //if player is still alive, player wins!
-    if (playerInfo.health > 0) {
-        window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
+    window.alert("The game has ended. Let's see how you did!");
+
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
+    }
+
+    if (playerInfo.money > highScore) {
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+
+        window.alert(playerInfo.name + " has set a new high score of " + playerInfo.money + "!");
+ 
     } else {
-        window.alert("You've lost your robot in battle.");
+        window.alert("You did not beat your high score of " + highScore);
+        
+
     }
 
     //ask player if thye want to play again
